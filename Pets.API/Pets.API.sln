@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pets.Domain", "..\Pets.Doma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pets.Infrastructure", "..\Pets.Infrastructure\Pets.Infrastructure.csproj", "{2865E114-978A-49D3-A2C3-2042E0BB00C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pets.Application", "..\Pets.Application\Pets.Application.csproj", "{474B4742-3877-4B37-8508-56DA9DCDE6D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2865E114-978A-49D3-A2C3-2042E0BB00C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2865E114-978A-49D3-A2C3-2042E0BB00C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2865E114-978A-49D3-A2C3-2042E0BB00C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{474B4742-3877-4B37-8508-56DA9DCDE6D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{474B4742-3877-4B37-8508-56DA9DCDE6D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{474B4742-3877-4B37-8508-56DA9DCDE6D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{474B4742-3877-4B37-8508-56DA9DCDE6D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

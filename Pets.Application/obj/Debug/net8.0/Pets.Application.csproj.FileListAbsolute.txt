@@ -2,9 +2,7 @@ C:\Users\asahe\source\repos\ASAO-PROGRAMACION-2-ITLA\Pets.Application\bin\Debug\
 C:\Users\asahe\source\repos\ASAO-PROGRAMACION-2-ITLA\Pets.Application\bin\Debug\net8.0\Pets.Application.dll
 C:\Users\asahe\source\repos\ASAO-PROGRAMACION-2-ITLA\Pets.Application\bin\Debug\net8.0\Pets.Application.pdb
 C:\Users\asahe\source\repos\ASAO-PROGRAMACION-2-ITLA\Pets.Application\bin\Debug\net8.0\Pets.Domain.dll
-C:\Users\asahe\source\repos\ASAO-PROGRAMACION-2-ITLA\Pets.Application\bin\Debug\net8.0\Pets.Infrastructure.dll
 C:\Users\asahe\source\repos\ASAO-PROGRAMACION-2-ITLA\Pets.Application\bin\Debug\net8.0\Pets.Domain.pdb
-C:\Users\asahe\source\repos\ASAO-PROGRAMACION-2-ITLA\Pets.Application\bin\Debug\net8.0\Pets.Infrastructure.pdb
 C:\Users\asahe\source\repos\ASAO-PROGRAMACION-2-ITLA\Pets.Application\obj\Debug\net8.0\Pets.Application.csproj.AssemblyReference.cache
 C:\Users\asahe\source\repos\ASAO-PROGRAMACION-2-ITLA\Pets.Application\obj\Debug\net8.0\Pets.Application.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\asahe\source\repos\ASAO-PROGRAMACION-2-ITLA\Pets.Application\obj\Debug\net8.0\Pets.Application.AssemblyInfoInputs.cache
