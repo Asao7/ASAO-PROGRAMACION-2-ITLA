@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Pets.API.Data;
-using Pets.API.Models;
 using Pets.API.DTOs;
+using Pets.Domain.Entities;
+using Pets.Domain.Repository;
 
 namespace Pets.API.Controllers
 {
@@ -10,25 +9,23 @@ namespace Pets.API.Controllers
     [ApiController]
     public class PetsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IPetRepository _repository;
 
-        public PetsController(AppDbContext context)
+        public PetsController(IPetRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        // GET: api/pets
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pet>>> GetPets()
         {
-            return await _context.Pets.ToListAsync();
+            return await _repository.GetAllAsync();
         }
 
-        // GET: api/pets/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Pet>> GetPet(int id)
         {
-            var pet = await _context.Pets.FindAsync(id);
+            var pet = await _repository.GetByIdAsync(id);
 
             if (pet == null)
                 return NotFound();
@@ -36,9 +33,8 @@ namespace Pets.API.Controllers
             return pet;
         }
 
-        // POST: api/pets
         [HttpPost]
-        public async Task<ActionResult<Pet>> CreatePet(CreatePetDto dto)
+        public async Task<ActionResult> CreatePet(CreatePetDto dto)
         {
             var pet = new Pet
             {
@@ -47,41 +43,9 @@ namespace Pets.API.Controllers
                 Species = dto.Species
             };
 
-            _context.Pets.Add(pet);
-            await _context.SaveChangesAsync();
+            await _repository.AddAsync(pet);
 
-            return CreatedAtAction(nameof(GetPet), new { id = pet.Id }, pet);
-        }
-
-        // PUT: api/pets/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePet(int id, UpdatePetDto dto)
-        {
-            var pet = await _context.Pets.FindAsync(id);
-            if (pet == null)
-                return NotFound();
-
-            pet.Name = dto.Name;
-            pet.Age = dto.Age;
-            pet.Species = dto.Species;
-
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        // DELETE: api/pets/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePet(int id)
-        {
-            var pet = await _context.Pets.FindAsync(id);
-            if (pet == null)
-                return NotFound();
-
-            _context.Pets.Remove(pet);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Ok(pet);
         }
     }
 }

@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Pets.API.Data;
+using Pets.Infrastructure.Context;
 
 #nullable disable
 
 namespace Pets.API.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(PetsDbContext))]
     [Migration("20260215031108_UpdatePetModel")]
     partial class UpdatePetModel
     {
