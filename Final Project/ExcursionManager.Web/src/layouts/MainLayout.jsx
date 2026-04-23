@@ -5,7 +5,7 @@ export default function MainLayout({ children }) {
     <div className="layout">
       <aside className="sidebar">
         <div className="sidebar-header">
-          <h2>🏔️ Vaamonos</h2>
+          <h2>🏔️ Vaamonos!</h2>
           <p>Guided Tours System</p>
         </div>
         <nav className="sidebar-nav">

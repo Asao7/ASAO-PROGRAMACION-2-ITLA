@@ -28,30 +28,31 @@ body {
 }
 
 .sidebar-header {
-  padding: 24px 20px;
+  padding: 16px 20px;
   border-bottom: 1px solid rgba(255,255,255,0.1);
-  background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&q=80');
+  background-image: url('https://idsb.tmgrup.com.tr/ly/uploads/images/2022/06/13/thumbs/800x531/211911.jpg');
   background-size: cover;
   background-position: center;
   border-radius: 0 0 8px 8px;
   min-height: 120px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .sidebar-header h2 {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 700;
-  color: #4fc3f7;
+  color: white;
   margin-bottom: 4px;
-  font-style: italic;
-  font-family: 'Georgia', serif;
+  font-family: 'Pacifico', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.6);
 }
 
 .sidebar-header p {
-  font-size: 11px;
-  color: rgba(255,255,255,0.5);
+  font-size: 14px;
+  color: rgba(3, 3, 0, 0.5);
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.6);
 }
 
 .sidebar-nav {
