@@ -6,7 +6,7 @@ const GALLERY = [
   { url: 'https://dynamic-media.tacdn.com/media/photo-o/30/8c/8e/a7/caption.jpg?w=1400&h=1000&s=1', caption: 'ATV y Buggy 4x4 en Punta Cana ' },
   { url: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/0b/ba/44/94.jpg', caption: 'Cave Excursions' },
   { url: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/32/97/be/a0/caption.jpg?w=1200&h=-1&s=1', caption: 'Cibao Valley' },
-  { url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80', caption: 'Peak Conquest' },
+  { url: 'https://resources.diariolibre.com/images/2024/03/21/valle-nuevo-y-la-piramide-deleite-para-los-sentidos-focus-0-0-1228-688.jpg', caption: 'Valle Nuevo Constanza' },
   { url: 'https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=400&q=80', caption: 'and More' },
 ];
 
