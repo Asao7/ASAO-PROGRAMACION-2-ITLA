@@ -40,3 +40,14 @@ export const createReservation = (data) => api.post('/reservations', data);
 export const confirmReservation = (id) => api.patch(`/reservations/${id}/confirm`);
 export const cancelReservation = (id) => api.patch(`/reservations/${id}/cancel`);
 export const markAttendance = (id) => api.patch(`/reservations/${id}/attendance`);
+
+// ─── Auth ─────────────────────────────────
+export const login = (data) => api.post('/auth/login', data);
+export const register = (data) => api.post('/auth/register', data);
+
+// ─── Axios interceptor - add token to every request ───
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
