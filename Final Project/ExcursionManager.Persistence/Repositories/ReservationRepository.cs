@@ -78,14 +78,23 @@ namespace ExcursionManager.Persistence.Repositories
         public async Task<bool> UpdateAsync(Reservation entity)
         {
             using var connection = _context.CreateConnection();
-            var sql = @"UPDATE Reservations SET status = @Status, attended = @Attended
+
+            var sql = @"UPDATE Reservations
+                        SET participant_id = @ParticipantId,
+                            excursion_id = @ExcursionId,
+                            status = @Status,
+                            attended = @Attended
                         WHERE reservation_id = @Id";
+
             var rows = await connection.ExecuteAsync(sql, new
             {
+                entity.ParticipantId,
+                entity.ExcursionId,
                 entity.Status,
                 entity.Attended,
                 entity.Id
             });
+
             return rows > 0;
         }
 
