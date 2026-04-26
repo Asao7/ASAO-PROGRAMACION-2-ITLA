@@ -124,5 +124,10 @@ namespace ExcursionManager.Application.Services
             }
             return dtos;
         }
+
+        public Task<bool> DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
