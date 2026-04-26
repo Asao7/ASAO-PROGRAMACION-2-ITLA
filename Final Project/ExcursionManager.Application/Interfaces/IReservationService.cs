@@ -11,5 +11,6 @@ namespace ExcursionManager.Application.Interfaces
         Task<bool> ConfirmAsync(int id);
         Task<bool> CancelAsync(int id);
         Task<bool> MarkAttendanceAsync(int id);
+        Task<bool> DeleteAsync(int id);
     }
 }
