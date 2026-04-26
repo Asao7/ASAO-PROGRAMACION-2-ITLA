@@ -12,7 +12,13 @@ export default function ReservationsPage() {
   const [participants, setParticipants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [form, setForm] = useState({ participantId: '', excursionId: '' });
+  const [form, setForm] = useState({
+  participantId: '',
+  excursionId: '',
+  status: '',
+  attended: false
+});
+  const [editing, setEditing] = useState(null);
 
   const fetchData = async () => {
     try {

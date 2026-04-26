@@ -81,12 +81,17 @@ namespace ExcursionManager.API.Controllers
         }
 
         // DELETE api/reservations/5
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            // Cancel first to release the spot
-            await _service.CancelAsync(id);
-            return NoContent();
+            try
+            {
+                var result = await _service.DeleteAsync(id);
+                if (!result) return NotFound($"Reservation {id} not found.");
+                return NoContent();
+            }
+            catch (InvalidOperationException ex) { return Conflict(ex.Message); }
         }
     }
 }
