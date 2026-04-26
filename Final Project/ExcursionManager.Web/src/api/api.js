@@ -7,6 +7,13 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' }
 });
 
+// ─── Axios interceptor - add token to every request ───
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
 // ─── Excursions ───────────────────────────
 export const getExcursions = () => api.get('/excursions');
 export const getAvailableExcursions = () => api.get('/excursions/available');
@@ -40,21 +47,13 @@ export const createReservation = (data) => api.post('/reservations', data);
 export const confirmReservation = (id) => api.patch(`/reservations/${id}/confirm`);
 export const cancelReservation = (id) => api.patch(`/reservations/${id}/cancel`);
 export const markAttendance = (id) => api.patch(`/reservations/${id}/attendance`);
-export const updateReservation = (id, data) => api.put(`/reservations/${id}`, data);
-export const deleteReservation = (id) => api.delete(`/reservations/${id}`);
 
-// ─── Auth ─────────────────────────────────
-export const login = (data) => api.post('/auth/login', data);
-export const register = (data) => api.post('/auth/register', data);
-
-// ─── Axios interceptor - add token to every request ───
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
 // ─── Routes ───────────────────────────────
 export const getRoutes = () => api.get('/routes');
 export const createRoute = (data) => api.post('/routes', data);
 export const updateRoute = (id, data) => api.put(`/routes/${id}`, data);
 export const deleteRoute = (id) => api.delete(`/routes/${id}`);
+
+// ─── Auth ─────────────────────────────────
+export const login = (data) => api.post('/auth/login', data);
+export const register = (data) => api.post('/auth/register', data);

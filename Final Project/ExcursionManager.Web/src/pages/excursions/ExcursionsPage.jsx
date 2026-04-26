@@ -9,20 +9,19 @@ export default function ExcursionsPage() {
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState({ name: '', description: '', routeId: '', guideId: '', departureDate: '', maxCapacity: '', price: '' });
+
   const fetchData = async () => {
-  try {
-    const [exc, gui, rou] = await Promise.all([
-      getExcursions(), getGuides(), getRoutes()
-    ]);
-    setExcursions(exc.data);
-    setGuides(gui.data);
-    setRoutes(rou.data);
-  } catch (err) {
-    console.error(err);
-  } finally {
-    setLoading(false);
-  }
-};
+    try {
+      const [exc, gui, rou] = await Promise.all([getExcursions(), getGuides(), getRoutes()]);
+      setExcursions(exc.data);
+      setGuides(gui.data);
+      setRoutes(rou.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => { fetchData(); }, []);
 
@@ -73,7 +72,7 @@ export default function ExcursionsPage() {
     <div>
       <div className="page-header">
         <div>
-          <h1>Excursions</h1>
+          <h1>🗺️ Excursions</h1>
           <p>Manage all guided excursions</p>
         </div>
         <button className="btn btn-primary" onClick={openCreate}>+ New Excursion</button>
