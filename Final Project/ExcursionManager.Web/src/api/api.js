@@ -51,3 +51,8 @@ api.interceptors.request.use((config) => {
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
+// ─── Routes ───────────────────────────────
+export const getRoutes = () => api.get('/routes');
+export const createRoute = (data) => api.post('/routes', data);
+export const updateRoute = (id, data) => api.put(`/routes/${id}`, data);
+export const deleteRoute = (id) => api.delete(`/routes/${id}`);
