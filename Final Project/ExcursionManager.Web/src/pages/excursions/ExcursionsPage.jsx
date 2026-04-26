@@ -1,31 +1,35 @@
 import { useEffect, useState } from 'react';
-import { getExcursions, createExcursion, updateExcursion, deleteExcursion, cancelExcursion, getGuides } from '../../api/api';
+import { getExcursions, createExcursion, updateExcursion, deleteExcursion, cancelExcursion, getGuides, getRoutes } from '../../api/api';
 
 export default function ExcursionsPage() {
   const [excursions, setExcursions] = useState([]);
   const [guides, setGuides] = useState([]);
+  const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(null);
-  const [form, setForm] = useState({ name: '', description: '', routeId: 1, guideId: '', departureDate: '', maxCapacity: '', price: '' });
-
+  const [form, setForm] = useState({ name: '', description: '', routeId: '', guideId: '', departureDate: '', maxCapacity: '', price: '' });
+  const [routes, setRoutes] = useState([]);
   const fetchData = async () => {
-    try {
-      const [exc, gui] = await Promise.all([getExcursions(), getGuides()]);
-      setExcursions(exc.data);
-      setGuides(gui.data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const [exc, gui, rou] = await Promise.all([
+      getExcursions(), getGuides(), getRoutes()
+    ]);
+    setExcursions(exc.data);
+    setGuides(gui.data);
+    setRoutes(rou.data);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => { fetchData(); }, []);
 
   const openCreate = () => {
     setEditing(null);
-    setForm({ name: '', description: '', routeId: 1, guideId: '', departureDate: '', maxCapacity: '', price: '' });
+    setForm({ name: '', description: '', routeId: '', guideId: '', departureDate: '', maxCapacity: '', price: '' });
     setShowModal(true);
   };
 
@@ -108,6 +112,13 @@ export default function ExcursionsPage() {
             <h2>{editing ? 'Edit Excursion' : 'New Excursion'}</h2>
             <div className="form-group"><label>Name</label><input value={form.name} onChange={e => setForm({...form, name: e.target.value})} /></div>
             <div className="form-group"><label>Description</label><input value={form.description} onChange={e => setForm({...form, description: e.target.value})} /></div>
+            <div className="form-group">
+              <label>Route</label>
+              <select value={form.routeId} onChange={e => setForm({...form, routeId: e.target.value})}>
+                <option value="">-- Select Route --</option>
+                {routes.map(r => <option key={r.id} value={r.id}>{r.name} ({r.difficulty})</option>)}
+              </select>
+            </div>
             <div className="form-group">
               <label>Guide</label>
               <select value={form.guideId} onChange={e => setForm({...form, guideId: e.target.value})}>

@@ -27,6 +27,9 @@ export default function MainLayout({ children, user, onLogout }) {
           <NavLink to="/reservations" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
             <span className="nav-icon">📋</span> Reservations
           </NavLink>
+          <NavLink to="/routes" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+            <span className="nav-icon">🛣️</span> Routes
+          </NavLink>
 
           {/* User info and logout */}
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '16px 20px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
