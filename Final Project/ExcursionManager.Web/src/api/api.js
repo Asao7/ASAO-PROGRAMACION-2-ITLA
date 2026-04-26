@@ -47,7 +47,7 @@ export const createReservation = (data) => api.post('/reservations', data);
 export const confirmReservation = (id) => api.patch(`/reservations/${id}/confirm`);
 export const cancelReservation = (id) => api.patch(`/reservations/${id}/cancel`);
 export const markAttendance = (id) => api.patch(`/reservations/${id}/attendance`);
-
+export const deleteReservation = (id) => api.delete(`/reservations/${id}`);
 // ─── Routes ───────────────────────────────
 export const getRoutes = () => api.get('/routes');
 export const createRoute = (data) => api.post('/routes', data);
