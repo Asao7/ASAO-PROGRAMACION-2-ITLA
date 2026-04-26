@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import {
   getReservations, createReservation,
-  confirmReservation, cancelReservation, markAttendance
+  confirmReservation, cancelReservation, markAttendance,
+  deleteReservation,
+  updateReservation
 } from '../../api/api';
 import { getExcursions } from '../../api/api';
 import { getParticipants } from '../../api/api';
@@ -12,12 +14,14 @@ export default function ReservationsPage() {
   const [participants, setParticipants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+
   const [form, setForm] = useState({
-  participantId: '',
-  excursionId: '',
-  status: '',
-  attended: false
-});
+    participantId: '',
+    excursionId: '',
+    status: '',
+    attended: false
+  });
+
   const [editing, setEditing] = useState(null);
 
   const fetchData = async () => {
@@ -35,30 +39,52 @@ export default function ReservationsPage() {
     }
   };
 
-  useEffect(() => { fetchData(); }, []);
-
-  const handleSubmit = async () => {
-    try {
-      await createReservation({
-        participantId: Number(form.participantId),
-        excursionId: Number(form.excursionId)
-      });
-      setShowModal(false);
-      fetchData();
-    } catch (err) {
-      alert(err.response?.data || 'Error creating reservation');
-    }
-  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleDelete = async (id) => {
-  if (!confirm('Delete this reservation?')) return;
+    if (!confirm('Delete this reservation?')) return;
 
-  await deleteReservation(id);
-  setReservations(reservations.filter(r => r.id !== id));
-};
+    await deleteReservation(id);
+    fetchData();
+  };
+
+  const openEdit = (res) => {
+    setEditing(res);
+    setForm({
+      participantId: res.participantId,
+      excursionId: res.excursionId,
+      status: res.status,
+      attended: res.attended
+    });
+    setShowModal(true);
+  };
+
+  const handleSubmit = async () => {
+    const payload = {
+      ...form,
+      participantId: Number(form.participantId),
+      excursionId: Number(form.excursionId)
+    };
+
+    if (editing) {
+      await updateReservation(editing.id, payload);
+    } else {
+      await createReservation(payload);
+    }
+
+    setShowModal(false);
+    setEditing(null);
+    fetchData();
+  };
 
   const statusBadge = (status) => {
-    const map = { Pending: 'badge-yellow', Confirmed: 'badge-green', Cancelled: 'badge-red' };
+    const map = {
+      Pending: 'badge-yellow',
+      Confirmed: 'badge-green',
+      Cancelled: 'badge-red'
+    };
     return <span className={`badge ${map[status] || 'badge-gray'}`}>{status}</span>;
   };
 
@@ -71,10 +97,14 @@ export default function ReservationsPage() {
           <h1>📋 Reservations</h1>
           <p>Manage all excursion reservations</p>
         </div>
+
         <button className="btn btn-primary" onClick={() => {
-          setForm({ participantId: '', excursionId: '' });
+          setForm({ participantId: '', excursionId: '', status: '', attended: false });
+          setEditing(null);
           setShowModal(true);
-        }}>+ New Reservation</button>
+        }}>
+          + New Reservation
+        </button>
       </div>
 
       <div className="table-container">
@@ -89,8 +119,9 @@ export default function ReservationsPage() {
               <th>Actions</th>
             </tr>
           </thead>
+
           <tbody>
-            {reservations.map(r => (
+            {reservations.map((r) => (
               <tr key={r.id}>
                 <td><strong>{r.participantName}</strong></td>
                 <td>{r.excursionName}</td>
@@ -101,28 +132,60 @@ export default function ReservationsPage() {
                     {r.attended ? 'Yes' : 'No'}
                   </span>
                 </td>
+
                 <td style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {r.status === 'Pending' && (
-                    <button className="btn btn-success btn-sm"
-                      onClick={async () => { await confirmReservation(r.id); fetchData(); }}>
+                    <button
+                      className="btn btn-success btn-sm"
+                      onClick={async () => {
+                        await confirmReservation(r.id);
+                        fetchData();
+                      }}
+                    >
                       Confirm
                     </button>
                   )}
+
                   {r.status === 'Confirmed' && !r.attended && (
-                    <button className="btn btn-primary btn-sm"
-                      onClick={async () => { await markAttendance(r.id); fetchData(); }}>
+                    <button
+                      className="btn btn-primary btn-sm"
+                      onClick={async () => {
+                        await markAttendance(r.id);
+                        fetchData();
+                      }}
+                    >
                       ✓ Attended
                     </button>
                   )}
+
                   {r.status !== 'Cancelled' && (
-                    <button className="btn btn-danger btn-sm"
+                    <button
+                      className="btn btn-danger btn-sm"
                       onClick={async () => {
                         if (!confirm('Cancel this reservation?')) return;
-                        await cancelReservation(r.id); fetchData();
-                      }}>
+                        await cancelReservation(r.id);
+                        fetchData();
+                      }}
+                    >
                       Cancel
                     </button>
                   )}
+
+                  {/* EDIT */}
+                  <button
+                    className="btn btn-warning btn-sm"
+                    onClick={() => openEdit(r)}
+                  >
+                    Edit
+                  </button>
+
+                  {/* DELETE */}
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => handleDelete(r.id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
@@ -130,35 +193,56 @@ export default function ReservationsPage() {
         </table>
       </div>
 
+      {/* MODAL */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>New Reservation</h2>
+            <h2>{editing ? 'Edit Reservation' : 'New Reservation'}</h2>
+
             <div className="form-group">
               <label>Participant</label>
-              <select value={form.participantId}
-                onChange={e => setForm({...form, participantId: e.target.value})}>
+              <select
+                value={form.participantId}
+                onChange={(e) => setForm({ ...form, participantId: e.target.value })}
+              >
                 <option value="">-- Select Participant --</option>
-                {participants.map(p => (
-                  <option key={p.id} value={p.id}>{p.fullName}</option>
+                {participants.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.fullName}
+                  </option>
                 ))}
               </select>
             </div>
+
             <div className="form-group">
               <label>Excursion</label>
-              <select value={form.excursionId}
-                onChange={e => setForm({...form, excursionId: e.target.value})}>
+              <select
+                value={form.excursionId}
+                onChange={(e) => setForm({ ...form, excursionId: e.target.value })}
+              >
                 <option value="">-- Select Excursion --</option>
-                {excursions.map(e => (
+                {excursions.map((e) => (
                   <option key={e.id} value={e.id}>
                     {e.name} ({e.availableSpots} spots left)
                   </option>
                 ))}
               </select>
             </div>
+
             <div className="form-actions">
-              <button className="btn btn-danger" onClick={() => setShowModal(false)}>Cancel</button>
-              <button className="btn btn-primary" onClick={handleSubmit}>Create Reservation</button>
+              <button
+                className="btn btn-danger"
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+
+              <button
+                className="btn btn-primary"
+                onClick={handleSubmit}
+              >
+                {editing ? 'Update Reservation' : 'Create Reservation'}
+              </button>
             </div>
           </div>
         </div>
