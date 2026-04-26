@@ -12,7 +12,13 @@ export default function ReservationsPage() {
   const [participants, setParticipants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [form, setForm] = useState({ participantId: '', excursionId: '' });
+  const [form, setForm] = useState({
+  participantId: '',
+  excursionId: '',
+  status: '',
+  attended: false
+});
+  const [editing, setEditing] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -43,6 +49,13 @@ export default function ReservationsPage() {
       alert(err.response?.data || 'Error creating reservation');
     }
   };
+
+  const handleDelete = async (id) => {
+  if (!confirm('Delete this reservation?')) return;
+
+  await deleteReservation(id);
+  setReservations(reservations.filter(r => r.id !== id));
+};
 
   const statusBadge = (status) => {
     const map = { Pending: 'badge-yellow', Confirmed: 'badge-green', Cancelled: 'badge-red' };
