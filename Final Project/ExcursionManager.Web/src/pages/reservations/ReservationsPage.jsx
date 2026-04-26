@@ -50,6 +50,13 @@ export default function ReservationsPage() {
     }
   };
 
+  const handleDelete = async (id) => {
+  if (!confirm('Delete this reservation?')) return;
+
+  await deleteReservation(id);
+  setReservations(reservations.filter(r => r.id !== id));
+};
+
   const statusBadge = (status) => {
     const map = { Pending: 'badge-yellow', Confirmed: 'badge-green', Cancelled: 'badge-red' };
     return <span className={`badge ${map[status] || 'badge-gray'}`}>{status}</span>;
