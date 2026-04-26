@@ -7,6 +7,7 @@ import GuidesPage from './pages/guides/GuidesPage';
 import ParticipantsPage from './pages/participants/ParticipantsPage';
 import ReservationsPage from './pages/reservations/ReservationsPage';
 import LoginPage from './pages/LoginPage';
+import RoutesPage from './pages/routes/RoutesPage';
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/guides" element={<GuidesPage />} />
           <Route path="/participants" element={<ParticipantsPage />} />
           <Route path="/reservations" element={<ReservationsPage />} />
+          <Route path="/routes" element={<RoutesPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </MainLayout>
