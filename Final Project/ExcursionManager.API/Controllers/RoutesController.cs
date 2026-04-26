@@ -30,6 +30,14 @@ namespace ExcursionManager.API.Controllers
             var id = await _repository.CreateAsync(route);
             return Ok(new { id });
         }
+
+        // 🔴 ESTE ERA EL QUE FALTABA
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _repository.DeleteAsync(id);
+            return NoContent();
+        }
     }
 
     public class CreateRouteDto
