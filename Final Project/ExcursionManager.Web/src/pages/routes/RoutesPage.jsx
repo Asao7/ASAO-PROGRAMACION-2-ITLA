@@ -7,7 +7,8 @@ export default function RoutesPage() {
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState({
-    name: '', description: '', distanceKm: '', difficulty: 'Easy', startPoint: '', endPoint: ''
+    name: '', description: '', distanceKm: '',
+    difficulty: 'Easy', startPoint: '', endPoint: ''
   });
 
   const fetchData = async () => {
@@ -64,7 +65,7 @@ export default function RoutesPage() {
     <div>
       <div className="page-header">
         <div>
-          <h1>🗺️ Routes</h1>
+          <h1>🛤️ Routes</h1>
           <p>Manage all excursion routes</p>
         </div>
         <button className="btn btn-primary" onClick={openCreate}>+ New Route</button>
