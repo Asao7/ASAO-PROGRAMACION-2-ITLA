@@ -15,6 +15,7 @@ export default function LoginPage({ onLogin }) {
     setError('');
     try {
       const res = await login(form);
+       console.log(res.data); // 👈 agrega esta línea
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data));
       onLogin(res.data);
