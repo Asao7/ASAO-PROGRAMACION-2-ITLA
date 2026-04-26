@@ -9,7 +9,6 @@ export default function ExcursionsPage() {
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState({ name: '', description: '', routeId: '', guideId: '', departureDate: '', maxCapacity: '', price: '' });
-  const [routes, setRoutes] = useState([]);
   const fetchData = async () => {
   try {
     const [exc, gui, rou] = await Promise.all([
