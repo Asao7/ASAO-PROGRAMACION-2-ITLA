@@ -16,6 +16,7 @@ namespace ExcursionManager.API.Controllers
             _repository = repository;
         }
 
+        // GET api/routes
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -23,6 +24,16 @@ namespace ExcursionManager.API.Controllers
             return Ok(routes);
         }
 
+        // GET api/routes/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var route = await _repository.GetByIdAsync(id);
+            if (route == null) return NotFound($"Route {id} not found.");
+            return Ok(route);
+        }
+
+        // POST api/routes
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateRouteDto dto)
         {
@@ -31,7 +42,22 @@ namespace ExcursionManager.API.Controllers
             return Ok(new { id });
         }
 
-        // 🔴 ESTE ERA EL QUE FALTABA
+        // PUT api/routes/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] CreateRouteDto dto)
+        {
+            var existing = await _repository.GetByIdAsync(id);
+            if (existing == null) return NotFound($"Route {id} not found.");
+
+            var updated = new Route(id, dto.Name, dto.Description, dto.DistanceKm,
+                dto.Difficulty, dto.StartPoint, dto.EndPoint, existing.CreatedAt);
+
+            var result = await _repository.UpdateAsync(updated);
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
+        // DELETE api/routes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

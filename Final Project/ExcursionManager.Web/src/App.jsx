@@ -6,8 +6,8 @@ import ExcursionsPage from './pages/excursions/ExcursionsPage';
 import GuidesPage from './pages/guides/GuidesPage';
 import ParticipantsPage from './pages/participants/ParticipantsPage';
 import ReservationsPage from './pages/reservations/ReservationsPage';
-import LoginPage from './pages/LoginPage';
 import RoutesPage from './pages/routes/RoutesPage';
+import LoginPage from './pages/LoginPage';
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -17,9 +17,7 @@ export default function App() {
     if (stored) setUser(JSON.parse(stored));
   }, []);
 
-  const handleLogin = (userData) => {
-    setUser(userData);
-  };
+  const handleLogin = (userData) => setUser(userData);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
